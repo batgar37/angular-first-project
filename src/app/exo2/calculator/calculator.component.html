@@ -1,0 +1,21 @@
+<h2>Calculator</h2>
+<form>
+  <input type="number" name="first-number" #firstNumber />
+  <select name="operator" id="operator" #operator>
+    <option value="+">+</option>
+    <option value="-">-</option>
+    <option value="/">/</option>
+    <option value="x">x</option>
+  </select>
+  <input type="number" name="second-number" #secondNumber />
+  <button
+    type="button"
+    (click)="calcul(firstNumber.value, operator.value, secondNumber.value)"
+    class="btn btn-primary"
+  >
+    <i class="bi-calculator"></i> Calcul
+  </button>
+</form>
+<ul>
+  <app-calcul *ngFor="let calcul of calculList" [calcul]="calcul" />
+</ul>

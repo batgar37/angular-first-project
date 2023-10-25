@@ -7,31 +7,7 @@ import { CalculComponent } from '../calcul/calcul.component';
 @Component({
   selector: 'app-calculator',
   standalone: true,
-  template: `
-    <section style="margin-top: 50px;">
-      <form>
-        <input type="number" name="first-number" #firstNumber />
-        <select name="operator" id="operator" #operator>
-          <option value="+">+</option>
-          <option value="-">-</option>
-          <option value="/">/</option>
-          <option value="x">x</option>
-        </select>
-        <input type="number" name="second-number" #secondNumber />
-        <button
-          type="button"
-          (click)="
-            calcul(firstNumber.value, operator.value, secondNumber.value)
-          "
-        >
-          Save
-        </button>
-      </form>
-    </section>
-    <ul>
-      <app-calcul *ngFor="let calcul of calculList" [calcul]="calcul" />
-    </ul>
-  `,
+  templateUrl: './calculator.component.html',
   styleUrls: ['./calculator.component.css'],
   imports: [CommonModule, CalculComponent],
 })

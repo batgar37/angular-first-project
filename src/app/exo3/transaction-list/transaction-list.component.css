@@ -1,7 +1,13 @@
-.mat-mdc-row .mat-mdc-cell {
-  cursor: pointer;
+table {
+  width: 100%;
 }
 
-.mat-mdc-row:hover .mat-mdc-cell {
-  background-color: hsla(0, 0%, 92%, 0.5);
+.content:hover {
+  background-color: rgb(225, 225, 225);
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+
+tr {
+  cursor: pointer;
 }

@@ -7,14 +7,7 @@ import { CalculatorService } from '../calculator.service';
   selector: 'app-calcul',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <li>
-      {{ calcul.date.getHours() }} : {{ calcul.date.getMinutes() }} :
-      {{ calcul.date.getSeconds() }} >> {{ calcul.operation }} =
-      {{ calcul.result }}
-      <button type="button" (click)="deleteCalcul(calcul.id)">Delete</button>
-    </li>
-  `,
+  templateUrl: './calcul.component.html',
   styleUrls: ['./calcul.component.css'],
 })
 export class CalculComponent {

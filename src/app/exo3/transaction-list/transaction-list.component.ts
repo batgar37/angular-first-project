@@ -1,42 +1,76 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TransactionService } from '../transaction.service';
+import { Component, LOCALE_ID, inject } from '@angular/core';
+import { Sort, MatSortModule } from '@angular/material/sort';
+import { NgFor, formatDate } from '@angular/common';
 import { Transaction } from '../transaction';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { MatSortModule, Sort, MatSort } from '@angular/material/sort';
-import { TransactionDataSource } from '../transaction.dataSource';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TransactionService } from '../transaction.service';
+import { RouterModule } from '@angular/router';
 
+/**
+ * @title Sorting overview
+ */
 @Component({
   selector: 'app-transaction-list',
-  standalone: true,
-  imports: [CommonModule, MatTableModule, MatSortModule],
-  providers: [TransactionDataSource],
   templateUrl: './transaction-list.component.html',
   styleUrls: ['./transaction-list.component.css'],
+  providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
+  standalone: true,
+  imports: [MatSortModule, NgFor, RouterModule],
 })
-export class TransactionListComponent implements OnInit {
-  constructor(private transactionService: TransactionService) {}
+export class TransactionListComponent {
+  transactionService: TransactionService = inject(TransactionService);
+  transactions: Transaction[] = [];
 
-  /**
-   * Control column ordering and which columns are displayed.
-   */
-  columnsToDisplay: string[] = ['id', 'amount', 'balance', 'label', 'date'];
+  sortedData: Transaction[];
 
-  dataSource: TransactionDataSource = new TransactionDataSource(
-    this.transactionService
-  );
-
-  ngOnInit() {
-    this.dataSource.loadTransaction({ active: 'id', direction: 'asc' });
+  constructor() {
+    this.sortedData = [];
+    // Getting all transaction and format the date
+    this.transactionService.getAllTransactions().subscribe((transactions) => {
+      this.transactions = transactions as Transaction[];
+      this.transactions.map((transaction) => {
+        return (transaction.date = formatDate(
+          transaction.date,
+          'dd/MM/yyyy',
+          'fr-FR'
+        ));
+      });
+      this.sortedData = this.transactions.slice();
+    });
   }
 
-  sortTransactions(sort: Sort): void {
-    this.dataSource.loadTransaction(sort);
-  }
+  sortData(sort: Sort) {
+    const data = this.transactions.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
 
-  log() {
-    console.log('click');
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'id':
+          return compare(a.id, b.id, isAsc);
+        case 'amount':
+          return compare(a.amount, b.amount, isAsc);
+        case 'balance':
+          return compare(a.balance, b.balance, isAsc);
+        case 'label':
+          return compare(a.label, b.label, isAsc);
+        case 'date':
+          return compareDate(a.date, b.date, isAsc);
+        default:
+          return 0;
+      }
+    });
   }
+}
+
+function compareDate(a: string, b: string, isAsc: boolean) {
+  a = a.split('/').reverse().join('');
+  b = b.split('/').reverse().join('');
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
+
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

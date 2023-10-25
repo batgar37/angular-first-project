@@ -3,8 +3,12 @@ import { HelloNameComponent } from './exo1/hello-name/hello-name.component';
 import { CalculatorComponent } from './exo2/calculator/calculator.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { registerLocaleData } from '@angular/common';
+import { NavComponent } from './utils/nav/nav.component';
+
+// Set local globaly
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr);
 
 @Component({
   selector: 'app-root',
@@ -12,39 +16,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     HelloNameComponent,
     CalculatorComponent,
+    NavComponent,
     HttpClientModule,
-    NavBarComponent,
     RouterModule,
   ],
-  template: ` <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand">Angular Router</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="container">
-        <ul class="nav navbar-nav" routerLinkActive="active">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="calculator">Calculator</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="transactions">Transactions</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <router-outlet></router-outlet>`,
+  templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {

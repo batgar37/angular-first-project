@@ -9,6 +9,9 @@ export class CalculatorService {
   // initialize history
   calculatorHistory: Calcul[] = [];
 
+  // operation the string of the operation
+  // result the number of the result or null if
+  // the calcul is impossible (division by 0)
   addCalculToHistory(operation: string, result: number | null) {
     this.calculatorHistory.push({
       id: uuidv4(),
@@ -22,6 +25,7 @@ export class CalculatorService {
     const index = this.calculatorHistory.findIndex(
       (calcul) => calcul.id === id
     );
+    // remove calcul from the list
     this.calculatorHistory.splice(index, 1);
   }
 

@@ -1,0 +1,31 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">Navbar</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="noListNav.toggle()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="date"><app-datetime></app-datetime></div>
+    <div
+      class="collapse navbar-collapse"
+      id="navbarNavAltMarkup"
+      mdbCollapse
+      #noListNav="mdbCollapse"
+    >
+      <div class="navbar-nav">
+        <a class="nav-link" aria-current="page" routerLink="/">Home</a>
+        <a class="nav-link" routerLink="calculator">Calculator</a>
+        <a class="nav-link" routerLink="transactions">Transactions</a>
+      </div>
+    </div>
+  </div>
+</nav>

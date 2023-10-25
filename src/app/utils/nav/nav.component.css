@@ -1,0 +1,9 @@
+@media (max-width: 991px) {
+  .date {
+    display: none;
+  }
+}
+.date {
+  border-right: 1px solid;
+  padding-right: 10px;
+}

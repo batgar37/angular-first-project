@@ -1,0 +1,12 @@
+<li>
+  {{ calcul.date.getHours() }} : {{ calcul.date.getMinutes() }} :
+  {{ calcul.date.getSeconds() }} >> {{ calcul.operation }} =
+  {{ calcul.result }}
+  <button
+    type="button"
+    (click)="deleteCalcul(calcul.id)"
+    class="btn btn-danger"
+  >
+    <i class="bi-trash"></i> Delete
+  </button>
+</li>
